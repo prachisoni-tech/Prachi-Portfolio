@@ -91,19 +91,31 @@ export default function Contact() {
       const recipient = 'soniprachi6897@gmail.com';
 
       // Build the email body with all form details pre-filled
-      const emailBody = 
+      const emailBody =
         `Name: ${formData.name}\n` +
         `Email: ${formData.email}\n\n` +
         `Message:\n${formData.message}`;
 
-      // Encode each part so special characters don't break the URL
-      const mailtoLink =
-        `mailto:${recipient}` +
-        `?subject=${encodeURIComponent(formData.subject)}` +
-        `&body=${encodeURIComponent(emailBody)}`;
+      // Detect mobile vs desktop
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-      // Opens Gmail (or default mail client) with everything pre-filled
-      window.location.href = mailtoLink;
+      if (isMobile) {
+        // On mobile: mailto works perfectly (Gmail/mail app is set as default)
+        const mailtoLink =
+          `mailto:${recipient}` +
+          `?subject=${encodeURIComponent(formData.subject)}` +
+          `&body=${encodeURIComponent(emailBody)}`;
+        window.location.href = mailtoLink;
+      } else {
+        // On desktop: open Gmail compose directly in a new tab
+        // so user doesn't need a mail client configured
+        const gmailLink =
+          `https://mail.google.com/mail/?view=cm&fs=1` +
+          `&to=${encodeURIComponent(recipient)}` +
+          `&su=${encodeURIComponent(formData.subject)}` +
+          `&body=${encodeURIComponent(emailBody)}`;
+        window.open(gmailLink, '_blank');
+      }
 
       // Mark success and reset form
       setSubmitStatus('success');
