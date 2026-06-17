@@ -92,8 +92,6 @@ export default function Contact() {
 
       // Build the email body with all form details pre-filled
       const emailBody =
-        `Name: ${formData.name}\n` +
-        `Email: ${formData.email}\n\n` +
         `Message:\n${formData.message}`;
 
       // Detect mobile vs desktop
