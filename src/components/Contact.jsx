@@ -92,7 +92,7 @@ export default function Contact() {
 
       // Build the email body with all form details pre-filled
       const emailBody =
-        `Message:\n${formData.message}`;
+        `\n${formData.message}`;
 
       // Detect mobile vs desktop
       const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
